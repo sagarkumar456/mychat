@@ -1,0 +1,309 @@
+/* Basic Reset & Body */
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #128C7E, #075E54); /* WhatsApp-like green gradient */
+    color: #eee;
+    overflow: hidden;
+}
+
+/* Login Screen */
+.login-screen {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.login-screen h2 {
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.login-screen input {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 250px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.login-screen input:focus {
+    border-color: #075E54; /* WhatsApp green */
+    box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.25);
+}
+
+.login-screen button,
+#sendMessageBtn {
+    background-color: #25D366; /* WhatsApp light green */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.login-screen button:hover,
+#sendMessageBtn:hover {
+    background-color: #1DA851;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: #ffdd00; /* Yellow for error */
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Chat App */
+.chat-app {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    width: 95%;
+    max-width: 800px;
+    height: 90vh;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInScale 0.8s ease-out forwards;
+}
+
+.chat-header {
+    background-color: #075E54; /* Dark WhatsApp green */
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h1 {
+    font-size: 1.8em;
+    margin: 0;
+    color: #fff;
+}
+
+#loggedInUser {
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scroll-behavior: smooth;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="3" fill="%23667781" opacity="0.1"/><circle cx="75" cy="75" r="3" fill="%23667781" opacity="0.1"/></svg>'); /* Subtle background pattern */
+    background-repeat: repeat;
+}
+
+/* Message Styles */
+.message-container {
+    display: flex;
+    align-items: flex-start;
+    max-width: 80%;
+    animation: messagePop 0.3s ease-out forwards;
+}
+
+.message-container.self {
+    align-self: flex-end;
+    flex-direction: row-reverse; /* Avatar/Timestamp on the right for self */
+}
+
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    max-width: calc(100% - 20px); /* Leave space for timestamp/avatar */
+    position: relative; /* For the speech bubble tail */
+}
+
+.message-container.self .message-bubble {
+    background-color: #DCF8C6; /* Light green for self messages */
+    color: #333;
+    margin-left: 10px; /* Space from right */
+    border-bottom-right-radius: 0; /* Flat corner for the tail */
+}
+
+.message-container:not(.self) .message-bubble {
+    background-color: #FFFFFF; /* White for other messages */
+    color: #333;
+    margin-right: 10px; /* Space from left */
+    border-bottom-left-radius: 0; /* Flat corner for the tail */
+}
+
+/* Speech bubble tail */
+.message-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+}
+
+.message-container.self .message-bubble::after {
+    border-left-color: #DCF8C6;
+    border-bottom-color: #DCF8C6;
+    right: -7px; /* Position the tail */
+    transform: translateY(50%); /* Adjust to fit bubble */
+}
+
+.message-container:not(.self) .message-bubble::after {
+    border-right-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    left: -7px;
+    transform: translateY(50%);
+}
+
+.message-username {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #667781; /* Dark grey for username */
+    margin-bottom: 2px;
+}
+
+.message-timestamp {
+    font-size: 0.7em;
+    color: #667781;
+    text-align: right;
+    margin-top: 5px;
+    margin-left: 10px; /* Space for user messages */
+    margin-right: 10px; /* Space for other messages */
+    min-width: 50px; /* Ensure space for time */
+}
+
+.message-container.self .message-timestamp {
+    margin-right: 0;
+    margin-left: 10px;
+}
+.message-container:not(.self) .message-timestamp {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+
+/* Image Message */
+.message-bubble img {
+    max-width: 250px; /* Max width for images in chat */
+    max-height: 200px;
+    border-radius: 8px;
+    display: block;
+    margin-top: 5px;
+    cursor: zoom-in;
+    transition: transform 0.2s ease-out;
+}
+.message-bubble img:hover {
+    transform: scale(1.02);
+}
+
+/* Input Area */
+.chat-input-area {
+    display: flex;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
+    align-items: center;
+}
+
+#messageInput {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none; /* No border for WhatsApp-like input */
+    border-radius: 25px;
+    font-size: 1em;
+    background-color: #fff;
+    color: #333;
+    margin-right: 10px;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: #919191; /* Grey for icons */
+    font-size: 1.5em;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes messagePop {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chat-app {
+        height: 100vh;
+        width: 100%;
+        border-radius: 0;
+    }
+    .chat-messages {
+        padding: 15px;
+    }
+    .message-container {
+        max-width: 90%;
+    }
+    .message-bubble {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+    .chat-input-area {
+        padding: 10px 15px;
+    }
+    #messageInput {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+    #sendMessageBtn {
+        padding: 10px 20px;
+    }
+    .icon-button {
+        font-size: 1.2em;
+    }
+}
